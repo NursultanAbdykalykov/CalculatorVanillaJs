@@ -108,17 +108,17 @@ operationButtons.forEach(button => {
     });
 });
 
-equalsButton.addEventListener('click', button => {
+equalsButton.addEventListener('click', () => {
     compute();
     updateDisplay();
 });
 
-allClearButton.addEventListener('click', button => {
+allClearButton.addEventListener('click', () => {
     clear();
     updateDisplay();
 });
 
-deleteButton.addEventListener('click', button => {
+deleteButton.addEventListener('click', () => {
     deleteNumber();
     updateDisplay();
 });
@@ -127,3 +127,35 @@ decimalButton.addEventListener('click', () => {
     appendNumber('.');
     updateDisplay();
 });
+
+// Инициализация дисплея
+updateDisplay();
+
+document.addEventListener('keydown', handleKeyboardInput);
+
+function handleKeyboardInput(e) {
+    if ((e.key >= '0' && e.key <= '9') || e.key === '.') {
+        appendNumber(e.key);
+        updateDisplay();
+    }
+    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+        let op = e.key;
+        if (op === '*') op = '×';
+        if (op === '/') op = '÷';
+        chooseOperation(op);
+        updateDisplay();
+    }
+    if (e.key === 'Enter' || e.key === '=') {
+        compute();
+        updateDisplay();
+    }
+    if (e.key === 'Backspace') {
+        deleteNumber();
+        updateDisplay();
+    }
+    if (e.key === 'Escape') {
+        clear();
+        updateDisplay();
+    }
+}
+
